@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Input;
+using WindowsInput.Native;
+using WindowsInput;
 
 namespace MacHomeEnd
 {
     class MyKeyboardHook : KeyboardHook
     {
-        private List<int> pressingKeys = new List<int>();
+        private InputSimulator inputSimulator = new InputSimulator();
+        private List<short> pressingKeys = new List<short>();
 
         public void Subscribe() => Hook();
         public void UnSubscribe() => UnHook();
@@ -29,10 +35,12 @@ namespace MacHomeEnd
                         case 37:
                             Console.WriteLine("Home");
                             releaseCtrl();
+                            inputSimulator.Keyboard.KeyPress(VirtualKeyCode.HOME);
                             return new IntPtr(1);
                         case 39:
                             Console.WriteLine("End");
                             releaseCtrl();
+                            inputSimulator.Keyboard.KeyPress(VirtualKeyCode.END);
                             return new IntPtr(1);
                     }
                 }
@@ -48,15 +56,16 @@ namespace MacHomeEnd
             return new IntPtr(0);
         }
 
-        private int getKeyCode(IntPtr lParam)
+        private short getKeyCode(IntPtr lParam)
         {
             var kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
-            var vkCode = (int)kb.vkCode;
+            var vkCode = (short)kb.vkCode;
             return vkCode;
         }
 
         private void releaseCtrl()
         {
+            inputSimulator.Keyboard.KeyUp(VirtualKeyCode.LCONTROL);
             pressingKeys.Remove(162);
             pressingKeys.Remove(163);
         }
