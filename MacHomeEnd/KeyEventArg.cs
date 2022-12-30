@@ -2,7 +2,7 @@
 
 using System;
 
-namespace FastMove
+namespace MacHomeEnd
 {
     public class KeyEventArg : EventArgs
     {
