@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace FastMove
@@ -13,5 +8,34 @@ namespace FastMove
     /// </summary>
     public partial class App : Application
     {
+        KeyboardHook hook = new KeyboardHook();
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            Console.WriteLine("===== OnStartup =====");
+            base.OnStartup(e);
+
+            hook.KeyDownEvent += hook_KeyDownEvent;
+            hook.KeyUpEvent += hook_KeyUpEvent;
+            hook.Hook();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            hook.UnHook();
+
+            Console.WriteLine("===== OnExit =====");
+            base.OnExit(e);
+        }
+
+        private void hook_KeyDownEvent(object sender, KeyEventArg e)
+        {
+            Console.WriteLine($"{e.KeyCode} down");
+        }
+
+        private void hook_KeyUpEvent(object sender, KeyEventArg e)
+        {
+            Console.WriteLine($"{e.KeyCode} up");
+        }
     }
 }
