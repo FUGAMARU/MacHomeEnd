@@ -72,7 +72,7 @@ namespace FastMove
             hookId = IntPtr.Zero;
         }
 
-        public IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
+        public virtual IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
             {

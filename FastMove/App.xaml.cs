@@ -8,34 +8,22 @@ namespace FastMove
     /// </summary>
     public partial class App : Application
     {
-        KeyboardHook hook = new KeyboardHook();
+        MyKeyboardHook hook = new MyKeyboardHook();
 
         protected override void OnStartup(StartupEventArgs e)
         {
             Console.WriteLine("===== OnStartup =====");
             base.OnStartup(e);
 
-            hook.KeyDownEvent += hook_KeyDownEvent;
-            hook.KeyUpEvent += hook_KeyUpEvent;
-            hook.Hook();
+            hook.Subscribe();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            hook.UnHook();
+            hook.UnSubscribe();
 
             Console.WriteLine("===== OnExit =====");
             base.OnExit(e);
-        }
-
-        private void hook_KeyDownEvent(object sender, KeyEventArg e)
-        {
-            Console.WriteLine($"{e.KeyCode} down");
-        }
-
-        private void hook_KeyUpEvent(object sender, KeyEventArg e)
-        {
-            Console.WriteLine($"{e.KeyCode} up");
         }
     }
 }
