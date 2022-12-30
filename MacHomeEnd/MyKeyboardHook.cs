@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using WindowsInput;
 
 namespace MacHomeEnd
@@ -10,6 +11,11 @@ namespace MacHomeEnd
 
         private int currentParam = 0;
         private short pressedPhysicalKey = 0;
+
+        const short LEFT_CTRL = (short)Keys.LControlKey;
+        const short RIGHT_CTRL = (short)Keys.RControlKey;
+        const short LEFT_ARROW = (short)Keys.Left;
+        const short RIGHT_ARROW = (short)Keys.Right;
 
         public void Subscribe() => Hook();
         public void UnSubscribe() => UnHook();
@@ -26,15 +32,15 @@ namespace MacHomeEnd
             if (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN)
             {
                 // 物理的にCtrlキーが押された場合キーコードを更新
-                if ((keyCode == 162 || keyCode == 163) && (currentParam == (int)lParam)) pressedPhysicalKey = keyCode;
+                if ((keyCode == LEFT_CTRL || keyCode == RIGHT_CTRL) && (currentParam == (int)lParam)) pressedPhysicalKey = keyCode;
 
                 var isLeftCtrlDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LCONTROL);
                 var isRightCtrlDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RCONTROL);
 
-                if ((keyCode == 37 || keyCode == 39) && (isLeftCtrlDown || isRightCtrlDown))
+                if ((keyCode == LEFT_ARROW || keyCode == RIGHT_ARROW) && (isLeftCtrlDown || isRightCtrlDown))
                 {
                     releaseCtrl();
-                    inputSimulator.Keyboard.KeyPress(keyCode == 37 ? VirtualKeyCode.HOME : VirtualKeyCode.END);
+                    inputSimulator.Keyboard.KeyPress(keyCode == LEFT_ARROW ? VirtualKeyCode.HOME : VirtualKeyCode.END);
                     pressCtrl();
                     return new IntPtr(1);
                 }
@@ -51,8 +57,8 @@ namespace MacHomeEnd
 
         private void pressCtrl()
         {
-            if (pressedPhysicalKey == 162) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LCONTROL);
-            if (pressedPhysicalKey == 163) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.RCONTROL);
+            if (pressedPhysicalKey == LEFT_CTRL) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LCONTROL);
+            if (pressedPhysicalKey == RIGHT_CTRL) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.RCONTROL);
         }
     }
 }
