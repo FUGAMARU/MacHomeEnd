@@ -10,19 +10,23 @@ namespace MacHomeEnd
         private InputSimulator inputSimulator = new InputSimulator();
 
         private int currentParam = 0;
-        private short pressedPhysicalKey = 0;
+        private short pressedPhysicalCtrlKey = 0;
+        private short pressedPhysicalAltKey = 0;
+        private bool isAltMode = false;
 
         const short LEFT_CTRL = (short)Keys.LControlKey;
         const short RIGHT_CTRL = (short)Keys.RControlKey;
         const short LEFT_ARROW = (short)Keys.Left;
         const short RIGHT_ARROW = (short)Keys.Right;
+        const short LEFT_ALT = (short)Keys.LMenu;
+        const short RIGHT_ALT = (short)Keys.RMenu;
 
         public void Subscribe() => Hook();
         public void UnSubscribe() => UnHook();
 
         public override IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode < 0) return new IntPtr(0);
+            if (nCode < 0 || isAltMode) return new IntPtr(0);
 
             if (currentParam == 0) currentParam = (int)lParam;
 
@@ -31,18 +35,38 @@ namespace MacHomeEnd
             // キーダウン
             if (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN)
             {
-                // 物理的にCtrlキーが押された場合キーコードを更新
-                if ((keyCode == LEFT_CTRL || keyCode == RIGHT_CTRL) && (currentParam == (int)lParam)) pressedPhysicalKey = keyCode;
+                // 物理キーが押された場合キーコードを更新
+                if ((keyCode == LEFT_CTRL || keyCode == RIGHT_CTRL) && (currentParam == (int)lParam)) pressedPhysicalCtrlKey = keyCode;
+                if ((keyCode == LEFT_ALT || keyCode == RIGHT_ALT) && (currentParam == (int)lParam)) pressedPhysicalAltKey = keyCode;                            
 
-                var isLeftCtrlDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LCONTROL);
-                var isRightCtrlDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RCONTROL);
-
-                if ((keyCode == LEFT_ARROW || keyCode == RIGHT_ARROW) && (isLeftCtrlDown || isRightCtrlDown))
+                if (keyCode == LEFT_ARROW || keyCode == RIGHT_ARROW)
                 {
-                    releaseCtrl();
-                    inputSimulator.Keyboard.KeyPress(keyCode == LEFT_ARROW ? VirtualKeyCode.HOME : VirtualKeyCode.END);
-                    pressCtrl();
-                    return new IntPtr(1);
+                    // Commandキーと矢印キーのキーコンビネーション
+                    var isLeftCtrlDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LCONTROL);
+                    var isRightCtrlDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RCONTROL);
+
+                    if (isLeftCtrlDown || isRightCtrlDown)
+                    {
+                        releaseCtrl();
+                        inputSimulator.Keyboard.KeyPress(keyCode == LEFT_ARROW ? VirtualKeyCode.HOME : VirtualKeyCode.END);
+                        pressCtrl();
+                        return new IntPtr(1);
+                    }
+
+                    // Optionキーと矢印キーのキーコンビネーション
+                    var isLeftAltDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LMENU);
+                    var isRightAltDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RMENU);
+
+                    if (isLeftAltDown || isRightAltDown)
+                    {
+                        isAltMode = true;
+                        inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LCONTROL);
+                        inputSimulator.Keyboard.KeyPress(keyCode == LEFT_ARROW ? VirtualKeyCode.LEFT : VirtualKeyCode.RIGHT);
+                        inputSimulator.Keyboard.KeyUp(VirtualKeyCode.LCONTROL);
+                        pressAlt();
+                        isAltMode = false;
+                        return new IntPtr(1);
+                    }
                 }
             }
 
@@ -57,8 +81,14 @@ namespace MacHomeEnd
 
         private void pressCtrl()
         {
-            if (pressedPhysicalKey == LEFT_CTRL) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LCONTROL);
-            if (pressedPhysicalKey == RIGHT_CTRL) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.RCONTROL);
+            if (pressedPhysicalCtrlKey == LEFT_CTRL) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LCONTROL);
+            if (pressedPhysicalCtrlKey == RIGHT_CTRL) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.RCONTROL);
+        }
+
+        private void pressAlt()
+        {
+            if (pressedPhysicalAltKey == LEFT_ALT) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LMENU);
+            if (pressedPhysicalAltKey == RIGHT_ALT) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.RMENU);
         }
     }
 }
