@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace MacHomeEnd
+namespace MacHomeEnd.lib
 {
     class KeyboardHook
     {

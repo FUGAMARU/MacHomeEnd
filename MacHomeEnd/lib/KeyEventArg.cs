@@ -2,7 +2,7 @@
 
 using System;
 
-namespace MacHomeEnd
+namespace MacHomeEnd.lib
 {
     public class KeyEventArg : EventArgs
     {
