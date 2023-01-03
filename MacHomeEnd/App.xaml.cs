@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Forms;
+using Application = System.Windows.Application;
 
 namespace MacHomeEnd
 {
@@ -8,16 +11,18 @@ namespace MacHomeEnd
     /// </summary>
     public partial class App : Application
     {
-        MyKeyboardHook hook = new MyKeyboardHook();
-        System.Windows.Forms.NotifyIcon notifyIcon = new System.Windows.Forms.NotifyIcon();
+        private MyKeyboardHook hook = new MyKeyboardHook();
+        private NotifyIcon notifyIcon = new NotifyIcon();
+        //private SettingControl settings = new SettingControl();
 
         protected override void OnStartup(StartupEventArgs e)
         {
             Console.WriteLine("===== OnStartup =====");
             base.OnStartup(e);
-                       
-            notifyIcon.Icon = MacHomeEnd.Properties.Resources.icon_64x64;                               
+
+            notifyIcon.Icon = MacHomeEnd.Properties.Resources.icon_64x64;
             notifyIcon.Text = "MacHomeEnd";
+            notifyIcon.ContextMenuStrip = SettingControl.SetContextMenu();
             notifyIcon.Visible = true;
 
             hook.Subscribe();
