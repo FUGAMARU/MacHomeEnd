@@ -22,9 +22,6 @@ namespace MacHomeEnd
         const short LEFT_ALT = (short)Keys.LMenu;
         const short RIGHT_ALT = (short)Keys.RMenu;
 
-        public void Subscribe() => Hook();
-        public void UnSubscribe() => UnHook();
-
         public override IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode < 0 || isAltMode) return new IntPtr(0);
@@ -46,7 +43,7 @@ namespace MacHomeEnd
                     var isLeftCtrlDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LCONTROL);
                     var isRightCtrlDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RCONTROL);
 
-                    if ((SettingControl.isEnableCmdKey) && (isLeftCtrlDown || isRightCtrlDown))
+                    if ((SettingControl.IsEnableCmdKey) && (isLeftCtrlDown || isRightCtrlDown))
                     {
                         cmd(keyCode);
                         return new IntPtr(1);
@@ -56,7 +53,7 @@ namespace MacHomeEnd
                     var isLeftAltDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LMENU);
                     var isRightAltDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RMENU);
 
-                    if ((SettingControl.isEnableOptionKey) && (isLeftAltDown || isRightAltDown))
+                    if ((SettingControl.IsEnableOptionKey) && (isLeftAltDown || isRightAltDown))
                     {
                         option(keyCode);
                         return new IntPtr(1);

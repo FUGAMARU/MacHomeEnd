@@ -7,8 +7,8 @@ namespace MacHomeEnd
 {
     class SettingControl
     {
-        public static bool isEnableCmdKey = true;
-        public static bool isEnableOptionKey = true;
+        public static bool IsEnableCmdKey = true;
+        public static bool IsEnableOptionKey = true;
 
         private static readonly ToolStripMenuItem isCmdChecked = new ToolStripMenuItem("command", null, (s, e) => toggleCmdSetting());
         private static readonly ToolStripMenuItem isOptionChecked = new ToolStripMenuItem("option", null, (s, e) => toggleOptionSetting());
@@ -43,31 +43,31 @@ namespace MacHomeEnd
         {
             checkValidConfig();
 
-            isEnableCmdKey = Convert.ToBoolean(ConfigurationManager.AppSettings["command"]);
-            isEnableOptionKey = Convert.ToBoolean(ConfigurationManager.AppSettings["option"]);
+            IsEnableCmdKey = Convert.ToBoolean(ConfigurationManager.AppSettings["command"]);
+            IsEnableOptionKey = Convert.ToBoolean(ConfigurationManager.AppSettings["option"]);
 
-            isCmdChecked.Checked = isEnableCmdKey;
-            isOptionChecked.Checked = isEnableOptionKey;
+            isCmdChecked.Checked = IsEnableCmdKey;
+            isOptionChecked.Checked = IsEnableOptionKey;
         }
 
         private static void saveConfig()
         {
-            config.AppSettings.Settings["command"].Value = isEnableCmdKey.ToString();
-            config.AppSettings.Settings["option"].Value = isEnableOptionKey.ToString();
+            config.AppSettings.Settings["command"].Value = IsEnableCmdKey.ToString();
+            config.AppSettings.Settings["option"].Value = IsEnableOptionKey.ToString();
             config.Save();
         }
 
         private static void toggleCmdSetting()
         {
-            isEnableCmdKey = !isEnableCmdKey;
-            isCmdChecked.Checked = isEnableCmdKey;
+            IsEnableCmdKey = !IsEnableCmdKey;
+            isCmdChecked.Checked = IsEnableCmdKey;
             saveConfig();
         }
 
         private static void toggleOptionSetting()
         {
-            isEnableOptionKey = !isEnableOptionKey;
-            isOptionChecked.Checked = isEnableOptionKey;
+            IsEnableOptionKey = !IsEnableOptionKey;
+            isOptionChecked.Checked = IsEnableOptionKey;
             saveConfig();
         }
     }
