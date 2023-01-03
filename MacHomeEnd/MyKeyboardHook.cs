@@ -10,10 +10,10 @@ namespace MacHomeEnd
     {
         private InputSimulator inputSimulator = new InputSimulator();
 
+        private bool isAltMode = false;
         private int currentParam = 0;
         private short pressedPhysicalCtrlKey = 0;
         private short pressedPhysicalAltKey = 0;
-        private bool isAltMode = false;
 
         const short LEFT_CTRL = (short)Keys.LControlKey;
         const short RIGHT_CTRL = (short)Keys.RControlKey;
@@ -46,11 +46,9 @@ namespace MacHomeEnd
                     var isLeftCtrlDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LCONTROL);
                     var isRightCtrlDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RCONTROL);
 
-                    if (isLeftCtrlDown || isRightCtrlDown)
+                    if ((SettingControl.isEnableCmdKey) && (isLeftCtrlDown || isRightCtrlDown))
                     {
-                        releaseCtrl();
-                        inputSimulator.Keyboard.KeyPress(keyCode == LEFT_ARROW ? VirtualKeyCode.HOME : VirtualKeyCode.END);
-                        pressCtrl();
+                        cmd(keyCode);
                         return new IntPtr(1);
                     }
 
@@ -58,14 +56,9 @@ namespace MacHomeEnd
                     var isLeftAltDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LMENU);
                     var isRightAltDown = inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RMENU);
 
-                    if (isLeftAltDown || isRightAltDown)
+                    if ((SettingControl.isEnableOptionKey) && (isLeftAltDown || isRightAltDown))
                     {
-                        isAltMode = true;
-                        inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LCONTROL);
-                        inputSimulator.Keyboard.KeyPress(keyCode == LEFT_ARROW ? VirtualKeyCode.LEFT : VirtualKeyCode.RIGHT);
-                        inputSimulator.Keyboard.KeyUp(VirtualKeyCode.LCONTROL);
-                        pressAlt();
-                        isAltMode = false;
+                        option(keyCode);
                         return new IntPtr(1);
                     }
                 }
@@ -90,6 +83,25 @@ namespace MacHomeEnd
         {
             if (pressedPhysicalAltKey == LEFT_ALT) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LMENU);
             if (pressedPhysicalAltKey == RIGHT_ALT) inputSimulator.Keyboard.KeyDown(VirtualKeyCode.RMENU);
+        }
+        private void cmd(short keyCode)
+        {
+            releaseCtrl();
+            inputSimulator.Keyboard.KeyPress(keyCode == LEFT_ARROW ? VirtualKeyCode.HOME : VirtualKeyCode.END);
+            pressCtrl();
+        }
+
+        private void option(short keyCode)
+        {
+            isAltMode = true;
+
+            inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LCONTROL);
+            inputSimulator.Keyboard.KeyPress(keyCode == LEFT_ARROW ? VirtualKeyCode.LEFT : VirtualKeyCode.RIGHT);
+            inputSimulator.Keyboard.KeyUp(VirtualKeyCode.LCONTROL);
+
+            pressAlt();
+
+            isAltMode = false;
         }
     }
 }
