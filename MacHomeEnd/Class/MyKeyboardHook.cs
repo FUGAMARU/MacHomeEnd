@@ -2,9 +2,9 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WindowsInput;
-using MacHomeEnd.lib;
+using MacHomeEnd.Lib;
 
-namespace MacHomeEnd
+namespace MacHomeEnd.Class
 {
     class MyKeyboardHook : KeyboardHook
     {

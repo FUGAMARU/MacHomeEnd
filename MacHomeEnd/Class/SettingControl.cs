@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Linq;
 
-namespace MacHomeEnd
+namespace MacHomeEnd.Class
 {
     class SettingControl
     {

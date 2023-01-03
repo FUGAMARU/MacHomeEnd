@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Forms;
+using MacHomeEnd.Class;
 using Application = System.Windows.Application;
 
 namespace MacHomeEnd
