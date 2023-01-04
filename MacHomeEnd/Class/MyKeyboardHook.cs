@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WindowsInput;
 using MacHomeEnd.Lib;
+using WindowsInput.Native;
 
 namespace MacHomeEnd.Class
 {

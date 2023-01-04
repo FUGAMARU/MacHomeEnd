@@ -38,9 +38,6 @@
     <ApplicationIcon>Resources\icon_256x256.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="H.InputSimulator, Version=1.3.0.0, Culture=neutral, PublicKeyToken=603f13207e65c17b, processorArchitecture=MSIL">
-      <HintPath>..\packages\H.InputSimulator.1.3.0\lib\net451\H.InputSimulator.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -58,6 +55,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsInput, Version=1.0.4.0, Culture=neutral, PublicKeyToken=9b287f7dc5073cad, processorArchitecture=MSIL">
+      <HintPath>..\packages\InputSimulator.1.0.4.0\lib\net20\WindowsInput.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
