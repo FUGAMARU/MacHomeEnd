@@ -30,7 +30,7 @@ namespace MacHomeEnd
             keyboardHook.UnHook();
 
             notifyIcon.Dispose();
-            
+
             base.OnExit(e);
         }
     }

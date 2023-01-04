@@ -35,7 +35,7 @@ namespace MacHomeEnd.Class
             {
                 // 物理キーが押された場合キーコードを更新
                 if ((keyCode == LEFT_CTRL || keyCode == RIGHT_CTRL) && (currentParam == (int)lParam)) pressedPhysicalCtrlKey = keyCode;
-                if ((keyCode == LEFT_ALT || keyCode == RIGHT_ALT) && (currentParam == (int)lParam)) pressedPhysicalAltKey = keyCode;                            
+                if ((keyCode == LEFT_ALT || keyCode == RIGHT_ALT) && (currentParam == (int)lParam)) pressedPhysicalAltKey = keyCode;
 
                 if (keyCode == LEFT_ARROW || keyCode == RIGHT_ARROW)
                 {

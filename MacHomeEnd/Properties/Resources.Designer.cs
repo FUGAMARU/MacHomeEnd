@@ -63,6 +63,16 @@ namespace MacHomeEnd.Properties {
         /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Icon icon_256x256 {
+            get {
+                object obj = ResourceManager.GetObject("icon_256x256", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Icon icon_64x64 {
             get {
                 object obj = ResourceManager.GetObject("icon_64x64", resourceCulture);

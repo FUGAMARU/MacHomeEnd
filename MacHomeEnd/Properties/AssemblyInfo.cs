@@ -7,12 +7,12 @@ using System.Windows;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("FastMove")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("MacHomeEnd")]
+[assembly: AssemblyDescription("Summon the Mac's key combination of command / option key and arrow keys to Windows.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FastMove")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyProduct("MacHomeEnd")]
+[assembly: AssemblyCopyright("© 2023 FUGAMARU")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
