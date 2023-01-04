@@ -29,3 +29,6 @@ Right click on the task tray icon to open options.
 | Name | Version | Link |
 | :---: | :---: | :---: |
 | .NET Framework | 4.8 | [Download](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) |
+
+## License
+This project is released under the MIT License, see LICENSE file.
