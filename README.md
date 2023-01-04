@@ -6,7 +6,7 @@ Recommended for programmers and writers who usually use a text editor.
 
 You no longer have to extend your pinky to the Home or End key every single time!
 
-![trying to press the Home key with pinky](https://dagashi.pw/files/keyboard_little_finger.gif)
+![trying to press the Home key with pinky](https://user-images.githubusercontent.com/7829486/210511359-ea726b12-f02c-4906-a648-d016cce37fac.gif)
 
 ## How to Use
 
